@@ -36,7 +36,7 @@ test('POST "/products" should return status code 201 and create a new product', 
         title: 'Amp',
         description: 'AMP Marshall',
         price: 12.56,
-        categoryId: createCategory.dataValues.id,
+        categoryId: createCategory.id,
     };
 
     const response = await request(app)
