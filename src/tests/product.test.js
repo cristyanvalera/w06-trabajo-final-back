@@ -1,3 +1,5 @@
+require('../models');
+
 const request = require('supertest');
 const app = require('../app');
 const Category = require('../models/Category');
@@ -34,16 +36,18 @@ test('POST "/products" should return status code 201 and create a new product', 
         title: 'Amp',
         description: 'AMP Marshall',
         price: 12.56,
-        categoryId: createCategory.id,
+        categoryId: createCategory.dataValues.id,
     };
 
     const response = await request(app)
         .post(URL_BASE)
         .send(product)
         .set('Authorization', `Bearer ${TOKEN}`);
-    
-    console.log(response.body);
+
+    productId = response.body.id;
 
     expect(response.status).toBe(201);
     expect(response.body).toBeDefined();
+    expect(response.body.categoryId).toBeDefined();
+    expect(response.body.categoryId).toBe(createCategory.id);
 });
