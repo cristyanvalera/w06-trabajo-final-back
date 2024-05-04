@@ -1,8 +1,9 @@
 const catchError = require('../utils/catchError');
 const Product = require('../models/Product');
+const Category = require('../models/Category');
 
 const index = catchError(async (request, response) => {
-    const results = await Product.findAll();
+    const results = await Product.findAll({ include: Category });
 
     return response.json(results);
 });
@@ -18,7 +19,7 @@ const show = catchError(async (request, response) => {
 
     const result = await Product.findByPk(id);
 
-    if (! result) return response.sendStatus(404);
+    if (!result) return response.sendStatus(404);
 
     return response.json(result);
 });
@@ -26,9 +27,9 @@ const show = catchError(async (request, response) => {
 const destroy = catchError(async (request, response) => {
     const { id } = request.params;
 
-    const result = await Product.destroy({ where: {id} });
+    const result = await Product.destroy({ where: { id } });
 
-    if (! result) return response.sendStatus(404);
+    if (!result) return response.sendStatus(404);
 
     return response.sendStatus(204);
 });
@@ -38,7 +39,7 @@ const update = catchError(async (request, response) => {
 
     const result = await Product.update(
         request.body,
-        { where: {id}, returning: true }
+        { where: { id }, returning: true }
     );
 
     if (result[0] === 0) return response.sendStatus(404);
