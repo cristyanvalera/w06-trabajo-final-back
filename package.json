@@ -8,9 +8,9 @@
         "start": "node src/server",
         "dev": "nodemon src/server",
         "reset:migrate": "node ./src/tests/testMigrate.js",
-        "test": "jest --detectOpenHandles ",
-        "pretest": "npm run reset:migrate",
-        "posttest": "npm run reset:migrate"
+        "test": "bun test --detectOpenHandles ",
+        "pretest": "bun reset:migrate",
+        "posttest": "bun reset:migrate"
     },
     "keywords": [],
     "author": "",
@@ -27,7 +27,6 @@
         "sequelize": "6.37.1"
     },
     "devDependencies": {
-        "jest": "29.7.0",
         "nodemon": "3.1.0",
         "supertest": "7.0.0"
     }
