@@ -49,6 +49,8 @@ test('POST "/products" should return status code 201 and create a new product', 
     expect(response.body).toBeDefined();
     expect(response.body.categoryId).toBeDefined();
     expect(response.body.categoryId).toBe(createCategory.id);
+
+    createCategory.destroy();
 });
 
 test('GET "/products/:id" should return status code 200', async () => {

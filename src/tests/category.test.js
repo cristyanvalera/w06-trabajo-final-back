@@ -26,6 +26,7 @@ test('GET "/categories" should return status code 200', async () => {
     console.log(response.body)
     expect(response.status).toBe(200);
     expect(response.body).toBeDefined();
+    expect(response.body).toHaveLength(0);
 });
 
 test('POST "/categories" should return status code 201 and create a new category', async () => {
