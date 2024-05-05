@@ -36,9 +36,11 @@ const destroy = catchError(async (request, response) => {
 
 const update = catchError(async (request, response) => {
     const { id } = request.params;
+    const { price } = request.body;
+    let formattedPrice = price * 100;
 
     const result = await Product.update(
-        request.body,
+        { ...request.body, price: formattedPrice },
         { where: { id }, returning: true }
     );
 
