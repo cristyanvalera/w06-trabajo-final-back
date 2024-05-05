@@ -23,7 +23,7 @@ beforeAll(async () => {
 test('GET "/categories" should return status code 200', async () => {
     const response = await request(app)
         .get(URL_BASE);
-    console.log(response.body)
+    
     expect(response.status).toBe(200);
     expect(response.body).toBeDefined();
     expect(response.body).toHaveLength(0);
