@@ -7,6 +7,7 @@ const Category = require('../models/Category');
 const URL_BASE = '/api/v1/products';
 let TOKEN;
 let productId;
+let createCategory;
 
 const product = {
     title: 'Amp',
@@ -24,6 +25,8 @@ beforeAll(async () => {
         .post('/api/v1/users/login')
         .send(user);
 
+    createCategory = await Category.create({ name: 'Category 01' });
+
     TOKEN = response.body.token;
 });
 
@@ -36,8 +39,6 @@ test('GET "/products" should return status code 200 and body can be defined', as
 });
 
 test('POST "/products" should return status code 201 and create a new product', async () => {
-    const createCategory = await Category.create({ name: 'Category 01' });
-
     const response = await request(app)
         .post(URL_BASE)
         .send({ ...product, categoryId: createCategory.id })
@@ -49,8 +50,6 @@ test('POST "/products" should return status code 201 and create a new product', 
     expect(response.body).toBeDefined();
     expect(response.body.categoryId).toBeDefined();
     expect(response.body.categoryId).toBe(createCategory.id);
-
-    createCategory.destroy();
 });
 
 test('GET "/products/:id" should return status code 200', async () => {
@@ -85,4 +84,6 @@ test('DELETE "/products/:id" should return status code 204', async () => {
         .set('Authorization', `Bearer ${TOKEN}`);
 
     expect(response.status).toBe(204);
+
+    await createCategory.destroy();
 });
